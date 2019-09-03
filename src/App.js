@@ -1,26 +1,38 @@
-import React from 'react';
+import React,{Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Book from './Book';
+class App extends Component {
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  constructor(props){
+    super(props)
+
+
+    this.state ={
+      BookService:[]
+
+    }
+    this.fetchBookService()
+  }
+fetchBookService = ()=>{
+  fetch('https://raw.githubusercontent.com/benoitvallon/100-best-books/master/books.json')
+  .then(response => response.json())
+  .then(BookService => {
+  
+    this.setState({
+      BookService: BookService
+    })
+  })
 }
+render(){
 
-export default App;
+  return(
+    <div>   
+<Book BookService = {this.state.BookService}/>
+
+    </div>
+
+  )
+}
+}
+export default App
